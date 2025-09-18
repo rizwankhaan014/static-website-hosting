@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Static Website Hosting on AWS</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f8ff;
+            color: #333;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #007BFF;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            color: #555;
+            font-size: 1.5em;
+            margin-top: 0;
+        }
+
+        .diagram {
+            width: 100%;
+            height: auto;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .steps {
+            text-align: left;
+            margin-top: 30px;
+        }
+
+        .step {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+            border-left: 5px solid #007BFF;
+            border-radius: 5px;
+            background-color: #fafafa;
+        }
+
+        .step h3 {
+            margin: 0 0 10px;
+            color: #0056b3;
+            font-size: 1.2em;
+        }
+
+        .step p {
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        .service {
+            font-weight: bold;
+            color: #007BFF;
+        }
+
+        .sub-diagram {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .box {
+            background-color: #e6f7ff;
+            border: 1px dashed #007BFF;
+            padding: 15px;
+            margin: 10px;
+            border-radius: 8px;
+            flex-grow: 1;
+            min-width: 150px;
+        }
+
+        .sub-box {
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 5px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Static Website Hosting on AWS</h1>
+        <h2>A serverless and scalable solution</h2>
+        <div class="steps">
+            <div class="step">
+                <h3>Step 1: DNS Lookup (<span class="service">Route 53</span>)</h3>
+                <p>The user's browser performs a DNS lookup for the website's domain (e.g., example.com) which is managed by AWS Route 53. Route 53 directs the traffic to CloudFront.</p>
+            </div>
+            <div class="step">
+                <h3>Step 2: Access Website (<span class="service">HTTPS</span>)</h3>
+                <p>The user's request reaches CloudFront, which enforces secure HTTPS communication for the entire session.</p>
+            </div>
+            <div class="step">
+                <h3>Step 3: Use SSL Certificate (<span class="service">ACM</span>)</h3>
+                <p>CloudFront uses an SSL certificate, provisioned and managed by AWS Certificate Manager (ACM), to establish a secure connection with the user's browser.</p>
+            </div>
+            <div class="step">
+                <h3>Step 4: Request from Origin (<span class="service">CloudFront</span>)</h3>
+                <p>CloudFront, acting as a CDN, checks its cache for the requested file. If the file is not in the cache, it forwards the request to the origin, which is an S3 bucket.</p>
+            </div>
+            <div class="step">
+                <h3>Step 5: Redirect Requests (<span class="service">S3</span>)</h3>
+                <p>The request is handled by an S3 bucket. A private S3 bucket is configured to redirect all incoming requests to a public S3 bucket that contains the static website files.</p>
+                <div class="sub-diagram">
+                    <div class="box">
+                        <div class="sub-box">Private S3 bucket</div>
+                        <p style="margin: 5px 0 0; font-size: 0.9em;">Redirects requests</p>
+                    </div>
+                    <div class="box">
+                        <div class="sub-box">Public S3 bucket</div>
+                        <p style="margin: 5px 0 0; font-size: 0.9em;">Hosts static files</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>
